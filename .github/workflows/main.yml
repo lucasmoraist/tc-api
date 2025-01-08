@@ -1,0 +1,53 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      GMAIL_EMAIL: ${{ secrets.GMAIL_EMAIL }}
+      GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+      PROFILE_ACTIVE: ${{ secrets.PROFILE_ACTIVE }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup-java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Login to Docker Hub
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build Docker Image
+        run: |
+          docker build \
+            --build-arg POSTGRES_USER=$POSTGRES_USER \
+            --build-arg POSTGRES_HOST=$POSTGRES_HOST \
+            --build-arg POSTGRES_DB=$POSTGRES_DB \
+            --build-arg POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
+            --build-arg POSTGRES_PORT=$POSTGRES_PORT \
+            --build-arg JWT_SECRET=$JWT_SECRET \
+            --build-arg GMAIL_EMAIL=$GMAIL_EMAIL \
+            --build-arg GMAIL_PASSWORD=$GMAIL_PASSWORD \
+            --build-arg PROFILE_ACTIVE=$PROFILE_ACTIVE \
+            -t $DOCKER_USERNAME/tc-api:latest .
+
+      - name: Push Docker Image
+        run: docker push $DOCKER_USERNAME/tc-api:latest
