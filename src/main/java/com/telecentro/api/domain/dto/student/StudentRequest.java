@@ -22,7 +22,7 @@ public record StudentRequest(
         @Size(min = 3, max = 180, message = "Name must be between 3 and 180 characters")
         String name,
         @NotBlank(message = "RG is required")
-        @Size(min = 9, max = 10, message = "RG must be between 9 and 10 characters")
+        @Size(min = 8, max = 9, message = "RG must be between 9 and 10 characters")
         String rg,
         LocalDate dtNasc,
         @NotBlank(message = "Address is required")
