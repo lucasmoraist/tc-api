@@ -3,7 +3,6 @@ package com.telecentro.api.infra.mail;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -14,12 +13,9 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
-
     public void sendMail(String studentEmail, String url) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
         helper.setTo(studentEmail);
         helper.setSubject("Confirme sua presença!");
