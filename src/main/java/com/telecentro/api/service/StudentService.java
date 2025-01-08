@@ -11,4 +11,5 @@ public interface StudentService {
     StudentResponse updateStudent(UUID id, StudentRequest request);
     Student findStudentEntityById(UUID id);
     Student saveStudent(StudentRequest request);
+    void confirmPresence(UUID id);
 }

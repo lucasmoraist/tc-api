@@ -37,6 +37,7 @@ public class Student {
     private String email;
     @Column(nullable = false, length = 11)
     private String phoneNumber;
+    private boolean isConfirmed;
 
     @ManyToOne
     @JsonBackReference

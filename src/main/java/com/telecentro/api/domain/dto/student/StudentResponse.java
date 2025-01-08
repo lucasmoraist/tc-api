@@ -25,7 +25,8 @@ public record StudentResponse(
         int age,
         String address,
         String email,
-        String phoneNumber
+        String phoneNumber,
+        boolean isConfirmed
 ) {
     public StudentResponse(Student student) {
         this(
@@ -36,7 +37,8 @@ public record StudentResponse(
                 student.getAge(),
                 student.getAddress(),
                 student.getEmail(),
-                student.getPhoneNumber()
+                student.getPhoneNumber(),
+                student.isConfirmed()
         );
     }
 }

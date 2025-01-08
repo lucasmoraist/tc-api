@@ -57,8 +57,9 @@ public class StudentController {
                     schema = @Schema(example = "Presença confirmada!")
             )),
     })
-    @GetMapping("/v1/confirm")
-    public ResponseEntity<String> confirm() {
+    @GetMapping("/v1/confirm/{id}")
+    public ResponseEntity<String> confirm(@PathVariable UUID id) {
+        this.service.confirmPresence(id);
         return ResponseEntity.ok().body("Presença confirmada!");
     }
 

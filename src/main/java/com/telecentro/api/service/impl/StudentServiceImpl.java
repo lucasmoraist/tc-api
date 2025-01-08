@@ -7,7 +7,6 @@ import com.telecentro.api.repository.StudentRepository;
 import com.telecentro.api.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -69,5 +68,15 @@ public class StudentServiceImpl implements StudentService {
         log.info("Student created successfully");
 
         return student;
+    }
+
+    @Override
+    public void confirmPresence(UUID id) {
+        Student student = this.findStudentEntityById(id);
+        log.info("Student found for confirming presence");
+
+        student.setConfirmed(true);
+        this.repository.save(student);
+        log.info("Presence confirmed successfully");
     }
 }
