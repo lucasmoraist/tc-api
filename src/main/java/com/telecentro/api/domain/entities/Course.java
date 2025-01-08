@@ -28,13 +28,10 @@ public class Course {
     private String name;
     @Column(columnDefinition = "TEXT")
     private String description;
-    @Column(nullable = false)
+
     private LocalDate startDate;
-    @Column(nullable = false)
     private LocalDate endDate;
-    @Column(nullable = false)
     private LocalTime startTime;
-    @Column(nullable = false)
     private LocalTime endTime;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)

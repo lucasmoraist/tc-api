@@ -28,10 +28,10 @@ public record ListCoursesResponse(
                 course.getId(),
                 course.getName(),
                 course.getDescription(),
-                course.getStartDate().toString(),
-                course.getEndDate().toString(),
-                course.getStartTime().toString(),
-                course.getEndTime().toString()
+                course.getStartDate() == null ? "" : course.getStartDate().toString(),
+                course.getEndDate() == null ? "" : course.getEndDate().toString(),
+                course.getStartTime() == null ? "" : course.getStartTime().toString(),
+                course.getEndTime() == null ? "" : course.getEndTime().toString()
         );
     }
 }
