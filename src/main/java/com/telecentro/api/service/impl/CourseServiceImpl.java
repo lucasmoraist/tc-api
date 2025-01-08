@@ -7,11 +7,13 @@ import com.telecentro.api.domain.dto.course.ListCoursesResponse;
 import com.telecentro.api.domain.dto.student.StudentRequest;
 import com.telecentro.api.domain.entities.Course;
 import com.telecentro.api.domain.entities.Student;
+import com.telecentro.api.infra.mail.MailService;
 import com.telecentro.api.repository.CourseRepository;
 import com.telecentro.api.service.CourseService;
 import com.telecentro.api.service.StudentService;
 import com.telecentro.api.validations.DateTimeValidation;
 import com.telecentro.api.validations.EnrollmentValidation;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,9 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository repository;
     private final EnrollmentValidation enrollmentValidation;
     private final DateTimeValidation dateTimeValidation;
+    private final MailService mailService;
+
+    private final String host = "http://localhost:8080";
 
     @Cacheable("course")
     @Override
@@ -96,11 +101,19 @@ public class CourseServiceImpl implements CourseService {
         this.enrollmentValidation.validate(course);
 
         Student student = this.studentService.saveStudent(studentRequest);
+        student.setConfirmed(false);
         log.info("Student saved");
 
         course.addStudent(student);
         this.repository.save(course);
         log.info("Student added to course");
+
+        try {
+            String url = host + "/student/v1/confirm/" + student.getId();
+            this.mailService.sendMail(student.getEmail(), url);
+        } catch (MessagingException e) {
+            log.error("Error sending email: {}", e.getMessage());
+        }
     }
 
     private Course getCourseById(Long id) {

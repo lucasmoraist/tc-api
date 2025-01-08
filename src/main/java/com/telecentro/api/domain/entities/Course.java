@@ -34,6 +34,8 @@ public class Course {
     private LocalTime startTime;
     private LocalTime endTime;
 
+    private boolean isOpen = true;
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Student> students;
