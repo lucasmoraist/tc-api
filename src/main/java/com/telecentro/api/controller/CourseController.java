@@ -77,6 +77,21 @@ public class CourseController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Operation(summary = "List all courses details", description = "List all courses details", security = {
+            @SecurityRequirement(name = "bearer")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Courses details listed successfully", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = CourseDetailsResponse.class)
+            )),
+    })
+    @GetMapping
+    public ResponseEntity<List<CourseDetailsResponse>> findAllCoursesDetails() {
+        var response = this.service.findAllCoursesDetails();
+        return ResponseEntity.ok().body(response);
+    }
+
     @Operation(summary = "Find a course by ID", description = "Find a course by ID", security = {
             @SecurityRequirement(name = "bearer")
     })

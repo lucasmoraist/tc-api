@@ -48,6 +48,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<CourseDetailsResponse> findAllCoursesDetails() {
+        log.info("Listing all courses with details");
+        return this.repository.findAll()
+                .stream()
+                .map(CourseDetailsResponse::new)
+                .toList();
+    }
+
+    @Override
     public CourseDetailsResponse courseById(Long id) {
         Course course = this.getCourseById(id);
         log.info("Course found by id");
