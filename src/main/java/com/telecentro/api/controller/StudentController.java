@@ -11,12 +11,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("/student")
 @Tag(name = "Student", description = "Operations related to students")
@@ -24,6 +27,21 @@ public class StudentController {
 
     @Autowired
     private StudentService service;
+
+    @Operation(summary = "List students", description = "List students", security = {
+            @SecurityRequirement(name = "bearer")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Student created successfully", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentResponse.class)
+            )),
+    })
+    @GetMapping
+    public ResponseEntity<List<StudentResponse>> findAll() {
+        log.info("Listing all students");
+        return ResponseEntity.ok().body(this.service.findAll());
+    }
 
     @Operation(summary = "Find student by id", description = "Find student by id", security = {
             @SecurityRequirement(name = "bearer")

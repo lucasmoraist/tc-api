@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,6 +23,14 @@ public class StudentServiceImpl implements StudentService {
     private StudentRepository repository;
 
     @Override
+    public List<StudentResponse> findAll() {
+        return this.repository.findAll()
+                .stream()
+                .map(StudentResponse::new)
+                .toList();
+    }
+
+    @Override
     public StudentResponse findStudentById(UUID id) {
         Student student = this.findStudentEntityById(id);
         log.info("Student found by id");
@@ -30,7 +39,7 @@ public class StudentServiceImpl implements StudentService {
 
     @CacheEvict(value = "course", allEntries = true)
     @Override
-    public StudentResponse updateStudent(UUID id, StudentRequest request)  {
+    public StudentResponse updateStudent(UUID id, StudentRequest request) {
         Student student = this.findStudentEntityById(id);
         log.info("Student found for updating");
 
@@ -43,7 +52,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findStudentEntityById(UUID id)  {
+    public Student findStudentEntityById(UUID id) {
         log.info("Searching for student with id: {}", id);
         return this.repository.findById(id)
                 .orElseThrow(() -> {
