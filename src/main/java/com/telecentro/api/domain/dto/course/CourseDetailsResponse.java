@@ -8,6 +8,7 @@ import java.util.List;
 
 @Schema(name = "CourseDetailsResponse", description = "Response object for course details", example = """
         {
+            "id": 1,
          	"name": "Sample Event",
          	"description": "This is a sample event description.",
          	"startDate": "2024-12-27",
@@ -29,6 +30,7 @@ import java.util.List;
          }
         """)
 public record CourseDetailsResponse(
+        Long id,
         String name,
         String description,
         String startDate,
@@ -39,6 +41,7 @@ public record CourseDetailsResponse(
 ) {
     public CourseDetailsResponse(Course course) {
         this(
+                course.getId(),
                 course.getName(),
                 course.getDescription(),
                 course.getStartDate().toString(),
