@@ -13,6 +13,7 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    // TODO: Informar quando não encontrar o email
     public void sendMail(String studentEmail, String url) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
