@@ -50,23 +50,27 @@ public class Course {
     }
 
     public void update(CourseRequest request) {
-        if(request.name() != null) {
+        if (request.name() != null) {
             this.name = request.name();
         }
-        if(request.description() != null) {
+        if (request.description() != null) {
             this.description = request.description();
         }
-        if(request.startDate() != null) {
+        if (request.startDate() != null) {
             this.startDate = request.startDate();
         }
-        if(request.endDate() != null) {
+        if (request.endDate() != null) {
             this.endDate = request.endDate();
         }
-        if(request.startTime() != null) {
+        if (request.startTime() != null) {
             this.startTime = request.startTime();
         }
-        if(request.endTime() != null) {
+        if (request.endTime() != null) {
             this.endTime = request.endTime();
+        }
+        if (this.students != null) {
+            this.students.forEach(student -> student.setCourse(null));
+            this.students.clear();
         }
     }
 
