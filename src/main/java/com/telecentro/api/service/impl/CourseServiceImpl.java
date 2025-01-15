@@ -37,7 +37,7 @@ public class CourseServiceImpl implements CourseService {
     private final MailService mailService;
 
     @Value("${app.host}")
-    private final String host;
+    private String host;
 
     @Cacheable("course")
     @Override
