@@ -49,7 +49,7 @@ public class SwaggerImpl {
 
     private Server serverProduction() {
         return new Server()
-                .url("https://tc-api-production.up.railway.app/")
+                .url("https://cozy-respect-production.up.railway.app/")
                 .description("Servidor de produção");
     }
 
