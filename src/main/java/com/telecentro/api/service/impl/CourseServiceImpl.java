@@ -18,6 +18,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,8 @@ public class CourseServiceImpl implements CourseService {
     private final DateTimeValidation dateTimeValidation;
     private final MailService mailService;
 
-    private final String host = "http://localhost:8080";
+    @Value("${app.host}")
+    private final String host;
 
     @Cacheable("course")
     @Override
