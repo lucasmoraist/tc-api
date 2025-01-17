@@ -34,7 +34,7 @@ public class Course {
     private LocalTime startTime;
     private LocalTime endTime;
 
-    private boolean isOpen = true;
+    private boolean isOpen;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -47,6 +47,7 @@ public class Course {
         this.endDate = request.endDate();
         this.startTime = request.startTime();
         this.endTime = request.endTime();
+        this.isOpen = true;
     }
 
     public void update(CourseRequest request) {
@@ -72,6 +73,7 @@ public class Course {
             this.students.forEach(student -> student.setCourse(null));
             this.students.clear();
         }
+        this.isOpen = true;
     }
 
     public void addStudent(Student student) {

@@ -11,7 +11,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
           "startDate": "2024-12-27",
           "endDate": "2024-12-28",
           "startTime": "09:00:00",
-          "endTime": "17:00:00"
+          "endTime": "17:00:00",
+          "isOpen": true
         }
         """)
 public record ListCoursesResponse(
@@ -21,7 +22,8 @@ public record ListCoursesResponse(
         String startDate,
         String endDate,
         String startTime,
-        String endTime
+        String endTime,
+        boolean isOpen
 ) {
     public ListCoursesResponse(Course course) {
         this(
@@ -31,7 +33,8 @@ public record ListCoursesResponse(
                 course.getStartDate() == null ? "" : course.getStartDate().toString(),
                 course.getEndDate() == null ? "" : course.getEndDate().toString(),
                 course.getStartTime() == null ? "" : course.getStartTime().toString(),
-                course.getEndTime() == null ? "" : course.getEndTime().toString()
+                course.getEndTime() == null ? "" : course.getEndTime().toString(),
+                course.isOpen()
         );
     }
 }
