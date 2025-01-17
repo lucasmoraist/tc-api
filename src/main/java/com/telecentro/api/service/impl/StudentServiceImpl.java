@@ -64,7 +64,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student saveStudent(StudentRequest request) {
         log.info("Searching for student with email: {}", request.email());
-        Optional<Student> studentFound = this.repository.findByEmail(request.email());
+        Optional<Student> studentFound = this.repository.findByEmailAndRg(request.email(), request.rg());
 
         if (studentFound.isPresent()) {
             log.info("Student found by email");
