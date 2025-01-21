@@ -23,7 +23,7 @@ O backend do site institucional do Telecentro da SOBEI foi projetado para gerenc
 
 ## Estrutura de Diretórios
 ```
-TC-API/
+tc-api/
 ├── .github/                    # Configurações do GitHub
 ├── .mvn/                       # Configurações do Maven Wrapper
 ├── collections/                # Coleções adicionais
@@ -41,14 +41,14 @@ TC-API/
 │   │   ├── resources/            # Arquivos de configuração e recursos
 │   │   │   ├── application.properties        # Configuração padrão
 │   │   │   ├── application-dev.properties    # Configuração para desenvolvimento
-│   │   │   ├── application-prod.properties   # Configuração para produção
-│   ├── test/                     # Testes da aplicação
+│   │   │   └── application-prod.properties   # Configuração para produção
+│   └── test/                     # Testes da aplicação
 ├── .env                         # Arquivo de variáveis de ambiente
 ├── .env.example                 # Exemplo de variáveis de ambiente
 ├── compose.yml                  # Configuração do Docker Compose
 ├── Dockerfile                   # Configuração para o Docker
 ├── mvnw                         # Script do Maven Wrapper
-├── pom.xml                      # Arquivo de configuração do Maven
+└── pom.xml                      # Arquivo de configuração do Maven
 ```
 
 ## Tecnologias Utilizadas
