@@ -115,7 +115,6 @@ public class CourseServiceImpl implements CourseService {
         student.setConfirmed(false);
         log.info("Student saved");
 
-        course.addStudent(student);
         this.repository.save(course);
         log.info("Student added to course");
 
