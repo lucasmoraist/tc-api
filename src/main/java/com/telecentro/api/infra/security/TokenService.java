@@ -15,6 +15,10 @@ public class TokenService {
     @Value("${jwt.secret}")
     private String token;
 
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String generateToken(String email) {
         if (this.token == null || this.token.isEmpty()) {
             log.error("Secret Key not configured");
