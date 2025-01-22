@@ -48,10 +48,11 @@ public record CourseDetailsResponse(
                 course.getEndDate().toString(),
                 course.getStartTime().toString(),
                 course.getEndTime().toString(),
-                course.getStudents()
-                        .stream()
+                course.getStudents() != null
+                        ? course.getStudents().stream()
                         .map(StudentResponse::new)
                         .toList()
+                        : List.of()
         );
     }
 }
