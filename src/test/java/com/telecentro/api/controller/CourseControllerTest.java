@@ -62,27 +62,6 @@ class CourseControllerTest {
     }
 
     @Test
-    void addStudentToCourse_ShouldReturnNoContent_WhenStudentIsAdded() {
-        // Arrange
-        Long courseId = 1L;
-        StudentRequest studentRequest = new StudentRequest(
-                "Student Name",
-                "1122233344",
-                LocalDate.of(2000, 1, 1),
-                "Rua example",
-                "johndoe@example.com",
-                "11999999999"
-        );
-
-        // Act
-        ResponseEntity<Void> result = courseController.addStudentToCourse(courseId, studentRequest);
-
-        // Assert
-        assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
-        verify(courseService, times(1)).addStudentToCourse(courseId, studentRequest);
-    }
-
-    @Test
     void findAllCourses_ShouldReturnOkWithListOfCourses() {
         // Arrange
 

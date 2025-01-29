@@ -33,20 +33,9 @@ import static org.mockito.Mockito.times;
 
 class CourseServiceImplTest {
 
-    @Mock
-    private StudentService studentService;
 
     @Mock
     private CourseRepository courseRepository;
-
-    @Mock
-    private EnrollmentValidation enrollmentValidation;
-
-    @Mock
-    private DateTimeValidation dateTimeValidation;
-
-    @Mock
-    private MailService mailService;
 
     @InjectMocks
     private CourseServiceImpl courseService;
@@ -194,41 +183,6 @@ class CourseServiceImplTest {
         // Assert
         verify(courseRepository, times(1)).findById(id);
         verify(courseRepository, times(1)).delete(course);
-    }
-
-    @Test
-    void addStudentToCourse_ShouldAddStudentAndSendEmail() throws MessagingException {
-        // Arrange
-        Long courseId = 1L;
-        StudentRequest studentRequest = new StudentRequest(
-                "John Doe",
-                "1234567890",
-                LocalDate.of(1990, 5, 15),
-                "123 Main Street, Apt 4B, Some City",
-                "johndoe@example.com",
-                "11987654321"
-        );
-        CourseRequest request = new CourseRequest(
-                "Course Name",
-                "Course Description",
-                LocalDate.of(2022, 12, 12),
-                LocalDate.of(2022, 12, 22),
-                LocalTime.of(9, 0),
-                LocalTime.of(17, 0)
-        );
-        Course course = new Course(request);
-        Student student = new Student(studentRequest);
-        when(courseRepository.findById(courseId)).thenReturn(Optional.of(course));
-        when(studentService.saveStudent(studentRequest)).thenReturn(student);
-
-        // Act
-        courseService.addStudentToCourse(courseId, studentRequest);
-
-        // Assert
-        verify(courseRepository, times(1)).findById(courseId);
-        verify(studentService, times(1)).saveStudent(studentRequest);
-        verify(courseRepository, times(1)).save(course);
-        verify(mailService, times(1)).sendMail(anyString(), anyString());
     }
 
 }
