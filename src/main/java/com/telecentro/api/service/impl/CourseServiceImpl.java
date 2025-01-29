@@ -30,14 +30,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
-    private final StudentService studentService;
     private final CourseRepository repository;
-    private final EnrollmentValidation enrollmentValidation;
     private final DateTimeValidation dateTimeValidation;
-    private final MailService mailService;
-
-    @Value("${app.host}")
-    private String host;
 
     @Cacheable("course")
     @Override
@@ -100,30 +94,6 @@ public class CourseServiceImpl implements CourseService {
 
         this.repository.delete(course);
         log.info("Course deleted");
-    }
-
-    @CacheEvict(value = "course", allEntries = true)
-    @Transactional
-    @Override
-    public void addStudentToCourse(Long courseId, StudentRequest studentRequest) {
-        Course course = this.getCourseById(courseId);
-        log.info("Course found for adding student");
-
-        this.enrollmentValidation.validate(course);
-
-        Student student = this.studentService.saveStudent(studentRequest);
-        student.setConfirmed(false);
-        log.info("Student saved");
-
-        this.repository.save(course);
-        log.info("Student added to course");
-
-        try {
-            String url = host + "/student/v1/confirm/" + student.getId();
-            this.mailService.sendMail(student.getEmail(), url);
-        } catch (MessagingException e) {
-            log.error("Error sending email: {}", e.getMessage());
-        }
     }
 
     private Course getCourseById(Long id) {

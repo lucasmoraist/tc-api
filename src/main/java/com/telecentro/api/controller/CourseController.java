@@ -44,26 +44,6 @@ public class CourseController {
         return ResponseEntity.ok().body(response);
     }
 
-    @Operation(summary = "Add a student to a course", description = "Add a student to a course")
-    @Parameter(name = "courseId", description = "Course ID", example = "1", required = true)
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Student added to course successfully"),
-            @ApiResponse(responseCode = "404", description = "Course not found", content = @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(example = """
-                            {
-                                "message": "Course not found",
-                                "status": NOT_FOUND
-                            }
-                            """)
-            )),
-    })
-    @PatchMapping("/v1/enrollment/{courseId}")
-    public ResponseEntity<Void> addStudentToCourse(@PathVariable Long courseId, @RequestBody @Valid StudentRequest studentRequest) {
-        this.service.addStudentToCourse(courseId, studentRequest);
-        return ResponseEntity.noContent().build();
-    }
-
     @Operation(summary = "List all courses", description = "List all courses")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Courses listed successfully", content = @Content(
