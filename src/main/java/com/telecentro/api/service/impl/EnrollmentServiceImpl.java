@@ -45,14 +45,15 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         student.setConfirmed(false);
         log.info("Student saved");
 
+        course.addStudent(student);
         this.courseRepository.save(course);
         log.info("Student added to course");
 
-        try {
-            String url = host + "/student/v1/confirm/" + student.getId();
-            this.mailService.sendMail(student.getEmail(), url);
-        } catch (MessagingException e) {
-            log.error("Error sending email: {}", e.getMessage());
-        }
+       try {
+           String url = host + "/student/v1/confirm/" + student.getId();
+           this.mailService.sendMail(student.getEmail(), url);
+       } catch (MessagingException e) {
+           log.error("Error sending email: {}", e.getMessage());
+       }
     }
 }

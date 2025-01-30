@@ -96,7 +96,8 @@ public class CourseServiceImpl implements CourseService {
         log.info("Course deleted");
     }
 
-    private Course getCourseById(Long id) {
+    @Override
+    public Course getCourseById(Long id) {
         log.info("Searching for course with id: {}", id);
         return this.repository.findById(id)
                 .orElseThrow(() -> {

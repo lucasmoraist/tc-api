@@ -5,6 +5,7 @@ import com.telecentro.api.domain.dto.course.CourseRequest;
 import com.telecentro.api.domain.dto.course.CourseResponse;
 import com.telecentro.api.domain.dto.course.ListCoursesResponse;
 import com.telecentro.api.domain.dto.student.StudentRequest;
+import com.telecentro.api.domain.entities.Course;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface CourseService {
     CourseResponse createCourse(CourseRequest request);
     CourseResponse updateCourse(Long id, CourseRequest request);
     void deleteCourse(Long id);
+    Course getCourseById(Long id);
 }
