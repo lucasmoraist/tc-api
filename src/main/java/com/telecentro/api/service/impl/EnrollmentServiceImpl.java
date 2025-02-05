@@ -45,7 +45,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         student.setConfirmed(false);
         log.info("Student saved");
 
-        course.addStudent(student);
         this.courseRepository.save(course);
         log.info("Student added to course");
 
