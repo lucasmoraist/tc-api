@@ -4,15 +4,9 @@ import com.telecentro.api.domain.dto.course.CourseDetailsResponse;
 import com.telecentro.api.domain.dto.course.CourseRequest;
 import com.telecentro.api.domain.dto.course.CourseResponse;
 import com.telecentro.api.domain.dto.course.ListCoursesResponse;
-import com.telecentro.api.domain.dto.student.StudentRequest;
 import com.telecentro.api.domain.entities.Course;
-import com.telecentro.api.domain.entities.Student;
-import com.telecentro.api.infra.mail.MailService;
 import com.telecentro.api.repository.CourseRepository;
-import com.telecentro.api.service.StudentService;
 import com.telecentro.api.validations.DateTimeValidation;
-import com.telecentro.api.validations.EnrollmentValidation;
-import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,12 +21,13 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 class CourseServiceImplTest {
 
+    @Mock
+    private DateTimeValidation dateTimeValidation;
 
     @Mock
     private CourseRepository courseRepository;
@@ -158,7 +153,8 @@ class CourseServiceImplTest {
                 LocalDate.of(2022, 12, 22),
                 LocalTime.of(9, 0),
                 LocalTime.of(17, 0)
-        );        Course course = new Course();
+        );
+        Course course = new Course();
         when(courseRepository.findById(id)).thenReturn(Optional.of(course));
 
         // Act
