@@ -76,8 +76,4 @@ public class Course {
         this.isOpen = true;
     }
 
-    public void addStudent(Student student) {
-        this.students.add(student);
-        student.setCourse(this);
-    }
 }
