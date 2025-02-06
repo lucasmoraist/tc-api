@@ -7,7 +7,6 @@ import com.telecentro.api.infra.mail.MailService;
 import com.telecentro.api.repository.CourseRepository;
 import com.telecentro.api.service.EnrollmentService;
 import com.telecentro.api.service.StudentService;
-import com.telecentro.api.validations.DateTimeValidation;
 import com.telecentro.api.validations.EnrollmentValidation;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
@@ -49,8 +48,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         log.info("Student added to course");
 
        try {
-           String url = host + "/student/v1/confirm/" + student.getId();
-           this.mailService.sendMail(student.getEmail(), url);
+           String path = host + "/student/v1/confirm/" + student.getId();
+           this.mailService.sendMail(student.getEmail(), path);
        } catch (MessagingException e) {
            log.error("Error sending email: {}", e.getMessage());
        }
