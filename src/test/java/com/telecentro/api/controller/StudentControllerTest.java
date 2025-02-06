@@ -7,9 +7,13 @@ import com.telecentro.api.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -21,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
+@ExtendWith(MockitoExtension.class)
 class StudentControllerTest {
 
     @Mock
@@ -28,11 +33,6 @@ class StudentControllerTest {
 
     @InjectMocks
     private StudentController studentController;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void findAll_ShouldReturnListOfStudents() {
@@ -46,16 +46,16 @@ class StudentControllerTest {
                 "11999999999"
         );
         Student student = new Student(studentRequest);
-        List<StudentResponse> students = List.of(new StudentResponse(student), new StudentResponse(student));
-        when(studentService.findAll()).thenReturn(students);
+        Page<StudentResponse> students = new PageImpl<>(List.of(new StudentResponse(student), new StudentResponse(student)));
+        when(studentService.findAll(1, 10)).thenReturn(students);
 
         // Act
-        ResponseEntity<List<StudentResponse>> response = studentController.findAll();
+        ResponseEntity<Page<StudentResponse>> response = studentController.findAll(1, 10);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(students, response.getBody());
-        verify(studentService, times(1)).findAll();
+        verify(studentService, times(1)).findAll(1, 10);
     }
 
     @Test

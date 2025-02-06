@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -36,33 +40,37 @@ class StudentServiceImplTest {
     @Test
     void findAll_ShouldReturnListOfStudentResponses() {
         // Arrange
-        StudentRequest student1 = new StudentRequest(
+        Student student1 = new Student(new StudentRequest(
                 "John Doe",
                 "1234567890",
                 LocalDate.of(1990, 5, 15),
                 "123 Main Street, Apt 4B, Some City",
                 "johndoe@example.com",
                 "11987654321"
-        );
+        ));
 
-        StudentRequest student2 = new StudentRequest(
-                "John Doe",
-                "1234567890",
-                LocalDate.of(1990, 5, 15),
-                "123 Main Street, Apt 4B, Some City",
-                "johndoe@example.com",
-                "11987654321"
-        );
+        Student student2 = new Student(new StudentRequest(
+                "Jane Doe",
+                "0987654321",
+                LocalDate.of(1992, 8, 25),
+                "456 Elm Street, Apt 2A, Another City",
+                "janedoe@example.com",
+                "11876543210"
+        ));
 
-        List<Student> students = List.of(new Student(student1), new Student(student2));
-        when(studentRepository.findAll()).thenReturn(students);
+        Page<Student> studentPage = new PageImpl<>(List.of(student1, student2));
+        Pageable pageable = PageRequest.of(1, 10);
+
+        when(studentRepository.findAll(pageable)).thenReturn(studentPage);
 
         // Act
-        List<StudentResponse> responses = studentService.findAll();
+        Page<StudentResponse> responses = studentService.findAll(1, 10);
 
         // Assert
-        assertEquals(2, responses.size());
-        verify(studentRepository, times(1)).findAll();
+        assertEquals(2, responses.getContent().size());
+        assertEquals("John Doe", responses.getContent().get(0).name());
+        assertEquals("Jane Doe", responses.getContent().get(1).name());
+        verify(studentRepository, times(1)).findAll(pageable);
     }
 
     @Test
