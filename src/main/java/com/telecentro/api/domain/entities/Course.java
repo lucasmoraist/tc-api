@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -47,6 +48,7 @@ public class Course {
         this.endDate = request.endDate();
         this.startTime = request.startTime();
         this.endTime = request.endTime();
+        this.students = new ArrayList<>();
         this.isOpen = true;
     }
 
@@ -76,4 +78,8 @@ public class Course {
         this.isOpen = true;
     }
 
+    public void addStudent(Student student) {
+        this.students.add(student);
+        student.setCourse(this);
+    }
 }
