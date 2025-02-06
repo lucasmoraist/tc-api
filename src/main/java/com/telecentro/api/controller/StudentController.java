@@ -5,6 +5,7 @@ import com.telecentro.api.domain.dto.student.StudentResponse;
 import com.telecentro.api.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +33,10 @@ public class StudentController {
     @Operation(summary = "List students", description = "List students", security = {
             @SecurityRequirement(name = "bearer")
     })
+    @Parameters(value = {
+            @Parameter(name = "page", description = "Page number", example = "0"),
+            @Parameter(name = "size", description = "Page size", example = "10")
+    })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Student created successfully", content = @Content(
                     mediaType = "application/json",
@@ -38,9 +44,12 @@ public class StudentController {
             )),
     })
     @GetMapping
-    public ResponseEntity<List<StudentResponse>> findAll() {
+    public ResponseEntity<Page<StudentResponse>> findAll(
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "size", defaultValue = "10", required = false) int size
+    ) {
         log.info("Listing all students");
-        return ResponseEntity.ok().body(this.service.findAll());
+        return ResponseEntity.ok().body(this.service.findAll(page, size));
     }
 
     @Operation(summary = "Find student by id", description = "Find student by id", security = {

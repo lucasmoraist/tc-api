@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +26,10 @@ public class StudentServiceImpl implements StudentService {
     private StudentRepository repository;
 
     @Override
-    public List<StudentResponse> findAll() {
-        return this.repository.findAll()
-                .stream()
-                .map(StudentResponse::new)
-                .toList();
+    public Page<StudentResponse> findAll(int page, int size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        return this.repository.findAll(pageable)
+                .map(StudentResponse::new);
     }
 
     @Override
