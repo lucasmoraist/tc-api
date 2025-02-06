@@ -9,11 +9,11 @@ import com.telecentro.api.repository.CourseRepository;
 import com.telecentro.api.service.StudentService;
 import com.telecentro.api.validations.EnrollmentValidation;
 import jakarta.mail.MessagingException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,6 +22,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class EnrollmentServiceImplTest {
 
     @Mock
@@ -38,11 +39,6 @@ class EnrollmentServiceImplTest {
 
     @InjectMocks
     private EnrollmentServiceImpl enrollmentService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void addStudentToCourse_ShouldAddStudentAndSendEmail() throws MessagingException {
@@ -66,6 +62,9 @@ class EnrollmentServiceImplTest {
         );
         Course course = new Course(request);
         Student student = new Student(studentRequest);
+
+        course.addStudent(student);
+
         when(courseRepository.findById(courseId)).thenReturn(Optional.of(course));
         when(studentService.saveStudent(studentRequest)).thenReturn(student);
 
