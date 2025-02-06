@@ -6,6 +6,7 @@ import com.telecentro.api.domain.entities.Student;
 import com.telecentro.api.repository.StudentRepository;
 import com.telecentro.api.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -61,6 +62,7 @@ public class StudentServiceImpl implements StudentService {
                 });
     }
 
+    @Transactional
     @Override
     public Student saveStudent(StudentRequest request) {
         log.info("Searching for student with email: {}", request.email());
