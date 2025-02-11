@@ -77,6 +77,31 @@ public class StudentController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Operation(summary = "Find student by term", description = "Find student by term", security = {
+            @SecurityRequirement(name = "bearer")
+    })
+    @Parameter(name = "term", description = "Search term", example = "John Doe", required = true)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Student found successfully", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = StudentResponse.class)
+            )),
+            @ApiResponse(responseCode = "404", description = "Student not found", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(example = """
+                            {
+                                "message": "Student not found",
+                                "status": NOT_FOUND
+                            }
+                            """)
+            )),
+    })
+    @GetMapping("/search")
+    public ResponseEntity<StudentResponse> findByTerm(@RequestParam String term) {
+        var response = this.service.findByTerm(term);
+        return ResponseEntity.ok().body(response);
+    }
+
     @Operation(summary = "Confirmation of presence", description = "Confirmation of presence")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Presence confirmed successfully", content = @Content(

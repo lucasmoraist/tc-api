@@ -39,6 +39,18 @@ public class StudentServiceImpl implements StudentService {
         return new StudentResponse(student);
     }
 
+    @Override
+    public StudentResponse findByTerm(String term) {
+        log.info("Searching for student by term: {}", term);
+        Student student = this.repository.findByTerm(term)
+                .orElseThrow(() -> {
+                    log.error("Student not found");
+                    return new EntityNotFoundException("Student not found");
+                });
+
+        return new StudentResponse(student);
+    }
+
     @CacheEvict(value = "course", allEntries = true)
     @Override
     public StudentResponse updateStudent(UUID id, StudentRequest request) {

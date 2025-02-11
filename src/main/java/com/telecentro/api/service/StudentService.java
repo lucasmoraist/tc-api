@@ -11,6 +11,7 @@ import java.util.UUID;
 public interface StudentService {
     Page<StudentResponse> findAll(int page, int size);
     StudentResponse findStudentById(UUID id);
+    StudentResponse findByTerm(String term);
     StudentResponse updateStudent(UUID id, StudentRequest request);
     Student findStudentEntityById(UUID id);
     Student saveStudent(StudentRequest request);
