@@ -97,7 +97,7 @@ public class StudentController {
             )),
     })
     @GetMapping("/search")
-    public ResponseEntity<StudentResponse> findByTerm(@RequestParam String term) {
+    public ResponseEntity<List<StudentResponse>> findByTerm(@RequestParam String term) {
         var response = this.service.findByTerm(term);
         return ResponseEntity.ok().body(response);
     }

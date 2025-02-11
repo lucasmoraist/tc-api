@@ -40,15 +40,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponse findByTerm(String term) {
+    public List<StudentResponse> findByTerm(String term) {
         log.info("Searching for student by term: {}", term);
-        Student student = this.repository.findByTerm(term)
-                .orElseThrow(() -> {
-                    log.error("Student not found");
-                    return new EntityNotFoundException("Student not found");
-                });
-
-        return new StudentResponse(student);
+        return this.repository.findByTerm(term)
+                .stream()
+                .map(StudentResponse::new)
+                .toList();
     }
 
     @CacheEvict(value = "course", allEntries = true)
