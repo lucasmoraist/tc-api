@@ -1,7 +1,7 @@
 package com.telecentro.api.infra.security;
 
 import com.telecentro.api.domain.entities.Agent;
-import com.telecentro.api.repository.AgentRepository;
+import com.telecentro.api.repository.jpa.AgentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

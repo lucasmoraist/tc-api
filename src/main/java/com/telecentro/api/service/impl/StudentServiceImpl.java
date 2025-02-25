@@ -3,7 +3,7 @@ package com.telecentro.api.service.impl;
 import com.telecentro.api.domain.dto.student.StudentRequest;
 import com.telecentro.api.domain.dto.student.StudentResponse;
 import com.telecentro.api.domain.entities.Student;
-import com.telecentro.api.repository.StudentRepository;
+import com.telecentro.api.repository.jpa.StudentRepository;
 import com.telecentro.api.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;

@@ -2,7 +2,7 @@ package com.telecentro.api.validations.impl;
 
 import com.telecentro.api.domain.entities.Course;
 import com.telecentro.api.domain.exceptions.SameTimeException;
-import com.telecentro.api.repository.CourseRepository;
+import com.telecentro.api.repository.jpa.CourseRepository;
 import com.telecentro.api.validations.DateTimeValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

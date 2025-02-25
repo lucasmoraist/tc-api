@@ -5,7 +5,7 @@ import com.telecentro.api.domain.dto.course.CourseRequest;
 import com.telecentro.api.domain.dto.course.CourseResponse;
 import com.telecentro.api.domain.dto.course.ListCoursesResponse;
 import com.telecentro.api.domain.entities.Course;
-import com.telecentro.api.repository.CourseRepository;
+import com.telecentro.api.repository.jpa.CourseRepository;
 import com.telecentro.api.validations.DateTimeValidation;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;

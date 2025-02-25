@@ -6,7 +6,7 @@ import com.telecentro.api.domain.entities.Agent;
 import com.telecentro.api.domain.exceptions.CredentialsException;
 import com.telecentro.api.domain.exceptions.UniqueException;
 import com.telecentro.api.infra.security.TokenService;
-import com.telecentro.api.repository.AgentRepository;
+import com.telecentro.api.repository.jpa.AgentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

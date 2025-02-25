@@ -5,7 +5,7 @@ import com.telecentro.api.domain.dto.student.StudentRequest;
 import com.telecentro.api.domain.entities.Course;
 import com.telecentro.api.domain.entities.Student;
 import com.telecentro.api.infra.mail.MailService;
-import com.telecentro.api.repository.CourseRepository;
+import com.telecentro.api.repository.jpa.CourseRepository;
 import com.telecentro.api.service.StudentService;
 import com.telecentro.api.validations.EnrollmentValidation;
 import jakarta.mail.MessagingException;

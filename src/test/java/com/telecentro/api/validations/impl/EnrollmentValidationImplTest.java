@@ -2,7 +2,7 @@ package com.telecentro.api.validations.impl;
 
 import com.telecentro.api.domain.entities.Course;
 import com.telecentro.api.domain.entities.Student;
-import com.telecentro.api.repository.CourseRepository;
+import com.telecentro.api.repository.jpa.CourseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

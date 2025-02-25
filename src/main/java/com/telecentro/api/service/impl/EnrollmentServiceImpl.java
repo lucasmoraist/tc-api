@@ -4,9 +4,10 @@ import com.telecentro.api.domain.dto.student.StudentRequest;
 import com.telecentro.api.domain.entities.Course;
 import com.telecentro.api.domain.entities.Student;
 import com.telecentro.api.infra.mail.MailService;
-import com.telecentro.api.repository.CourseRepository;
+import com.telecentro.api.repository.jpa.CourseRepository;
 import com.telecentro.api.service.EnrollmentService;
 import com.telecentro.api.service.StudentService;
+import com.telecentro.api.service.WhatsappService;
 import com.telecentro.api.validations.EnrollmentValidation;
 import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +27,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     private final CourseRepository courseRepository;
     private final EnrollmentValidation enrollmentValidation;
     private final MailService mailService;
+    private final WhatsappService whatsappService;
 
     @Value("${app.host}")
     private String host;
@@ -48,6 +50,8 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         this.courseRepository.save(course);
         log.info("Student added to course");
 
+        whatsappService.sendMessage(student.getPhoneNumber());
+        log.info("Whatsapp message sent");
        try {
            String path = host + "/student/v1/confirm/" + student.getId();
            this.mailService.sendMail(student.getEmail(), path);
