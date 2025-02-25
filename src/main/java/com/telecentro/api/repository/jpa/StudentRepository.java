@@ -1,4 +1,4 @@
-package com.telecentro.api.repository;
+package com.telecentro.api.repository.jpa;
 
 import com.telecentro.api.domain.entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
