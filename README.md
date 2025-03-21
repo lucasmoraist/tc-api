@@ -131,7 +131,7 @@ Logs são armazenados em arquivos rotativos no diretório `/logs`.
    mvn clean package
    java -jar target/tc-api-0.0.1-SNAPSHOT.jar
    ```
-
+```json
 [
   {
     "nome": "CEI Sociedade Beneficente Equilíbrio de Interlagos - Montanaro",
@@ -209,4 +209,6 @@ Logs são armazenados em arquivos rotativos no diretório `/logs`.
     "senha": "12Sobei34@"
   }
 ]
+```
+
 
